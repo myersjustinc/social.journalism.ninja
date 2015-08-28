@@ -1,5 +1,6 @@
 (function(window) {
-  var lastTitle = '',
+  var doneInitializing = false,
+    lastTitle = '',
     lastWords,
     middleWords,
     newTitleButton = window.document.getElementById('get-title'),
@@ -112,6 +113,15 @@
   function generateAndSetTitle(event) {
     var title = generateTitle();
     setTitle(title);
+
+    if (doneInitializing) {
+      window.ga && window.ga('send', {
+        'hitType': 'event',
+        'eventCategory': 'generate',
+        'eventAction': 'generate',
+        'eventLabel': title
+      });
+    }
   }
 
   function tweetTitle(event) {
@@ -125,7 +135,13 @@
       ),
       'sharer', 'toolbar=0,status=0,width=626,height=436'
     );
-    return false;
+
+    window.ga && window.ga('send', {
+      'hitType': 'event',
+      'eventCategory': 'tweet',
+      'eventAction': 'tweet',
+      'eventLabel': lastTitle
+    });
   }
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-= INITIALIZATION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -133,4 +149,5 @@
   newTitleButton.onclick = generateAndSetTitle;
   tweetButton.onclick = tweetTitle;
   generateAndSetTitle();
+  doneInitializing = true;
 })(this);
