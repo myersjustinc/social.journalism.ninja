@@ -36,3 +36,22 @@ button:active {
   background-color: #16bb69;
   border: 1px solid #00924e;
 }
+
+.credit {
+  color: #999;
+  font-size: 0.75em;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+.credit a {
+  border-bottom: 1px dotted #ccc;
+  color: #999;
+  text-decoration: none;
+}
+.credit a:visited {
+  color: #999;
+}
+.credit a:hover,
+.credit a:active {
+  color: #666;
+}
