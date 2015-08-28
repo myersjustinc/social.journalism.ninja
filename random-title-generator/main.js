@@ -128,9 +128,7 @@
     window.open(
       (
         'http://twitter.com/share?text=' +
-        encodeURIComponent(
-          'My new social journalism title is ' + lastTitle + '!'
-        ) +
+        encodeURIComponent(lastTitle) +
         '&url=' + encodeURIComponent(shareURL)
       ),
       'sharer', 'toolbar=0,status=0,width=626,height=436'
