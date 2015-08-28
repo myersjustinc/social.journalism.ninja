@@ -1,9 +1,9 @@
 (function(window) {
-  var firstOrMiddleWords,
-    lastTitle = '',
+  var lastTitle = '',
     lastWords,
+    middleWords,
     newTitleButton = window.document.getElementById('get-title'),
-    optionalFirstWords,
+    seniorityPrefixes,
     shareURL = getShareURL(),
     titleElem = window.document.getElementById('title'),
     tweetButton = window.document.getElementById('tweet-title');
@@ -11,7 +11,7 @@
   // -=-=-=-=-=-=-=-=-=-=-=-=-= NAME GENERATION =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
   // If three or more words, one of these words first:
-  optionalFirstWords = [
+  seniorityPrefixes = [
     'Assistant',
     'Associate',
     'Senior',
@@ -19,7 +19,7 @@
   ];
 
   // At least one of these words in every title, first or second (or both, can be used more than once in a row):
-  firstOrMiddleWords = [
+  middleWords = [
     'Audience',
     'Social',
     'Social Media',
@@ -51,16 +51,35 @@
   }
 
   function generateTitle() {
-    var title = '';
+    var firstMiddle,
+      secondMiddle,
+      title = '';
 
-    // Decide whether to make this be three words, and if so, pick a first
-    // word.
-    if (Math.random() > 0.5) {
-      title += randomWordFromList(optionalFirstWords) + ' ';
+    // Add a seniority prefix half the time.
+    if (Math.random() < 0.6) {
+      title += randomWordFromList(seniorityPrefixes) + ' ';
     }
 
-    // Pick a middle word.
-    title += randomWordFromList(firstOrMiddleWords);
+    // Pick one or two middle words.
+    firstMiddle = randomWordFromList(middleWords);
+    title += firstMiddle;
+    if (Math.random() < 0.75) {
+      // Pick a second middle word some of the time, but make sure it isn't the
+      // same as (or uncomfortably similar to) the first middle word.
+      while(true) {  // WARNING: Infinite loop!
+        secondMiddle = randomWordFromList(middleWords);
+        if (
+          (firstMiddle != secondMiddle) ||
+          (
+            (firstMiddle == 'Social Media' && secondMiddle == 'Social') ||
+            (firstMiddle == 'Social' && secondMiddle == 'Social Media')
+          )
+        ) {
+          break;  // Escape the infinite loop!
+        }
+      }
+      title += ' ' + secondMiddle;
+    }
 
     // Pick a last word.
     title += ' ' + randomWordFromList(lastWords);
