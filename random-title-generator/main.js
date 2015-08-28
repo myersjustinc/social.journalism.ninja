@@ -1,9 +1,12 @@
 (function(window) {
   var firstOrMiddleWords,
+    lastTitle = '',
     lastWords,
     newTitleButton = window.document.getElementById('get-title'),
     optionalFirstWords,
-    titleElem = window.document.getElementById('title');
+    shareURL = getShareURL(),
+    titleElem = window.document.getElementById('title'),
+    tweetButton = window.document.getElementById('tweet-title');
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-= NAME GENERATION =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -68,7 +71,21 @@
   // -=-=-=-=-=-=-=-=-=-=-=-=- DOM MANIPULATION =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
   function setTitle(title) {
+    lastTitle = title;
     titleElem.innerHTML = title;
+  }
+
+  // -=-=-=-=-=-=-=-=-=-=-= SHARE URL CUSTOMIZATION =-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  function getShareURL() {
+    var match = /shareURL=([^&]+)/.exec(window.location.search);
+
+    // Use the current URL if no other has been set.
+    if (match == null) {
+      return window.location.href;
+    }
+
+    return match[1];
   }
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-= EVENT HANDLERS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -78,8 +95,23 @@
     setTitle(title);
   }
 
+  function tweetTitle(event) {
+    window.open(
+      (
+        'http://twitter.com/share?text=' +
+        encodeURIComponent(
+          'My new social journalism title is ' + lastTitle + '!'
+        ) +
+        '&url=' + encodeURIComponent(shareURL)
+      ),
+      'sharer', 'toolbar=0,status=0,width=626,height=436'
+    );
+    return false;
+  }
+
   // -=-=-=-=-=-=-=-=-=-=-=-=-= INITIALIZATION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
   newTitleButton.onclick = generateAndSetTitle;
+  tweetButton.onclick = tweetTitle;
   generateAndSetTitle();
 })(this);
