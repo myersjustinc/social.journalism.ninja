@@ -1,4 +1,38 @@
 body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 100%;
+  margin: 0;
+  padding: 1em;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1em;
+  margin-top: 0;
+}
+
+.prompt {
+  font-size: 1.25em;
+  font-weight: normal;
+}
+
+#title {
+  color: #16bb69;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+button {
+  background-color: #00924e;
+  border: 1px solid #16bb69;
+  border-radius: 0.25em;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.5em;
+  font-size: 1em;
+}
+button:hover,
+button:active {
+  background-color: #16bb69;
+  border: 1px solid #00924e;
 }
