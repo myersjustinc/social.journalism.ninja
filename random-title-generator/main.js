@@ -70,8 +70,8 @@
       while(true) {  // WARNING: Infinite loop!
         secondMiddle = randomWordFromList(middleWords);
         if (
-          (firstMiddle != secondMiddle) ||
-          (
+          (firstMiddle != secondMiddle) &&
+          !(
             (firstMiddle == 'Social Media' && secondMiddle == 'Social') ||
             (firstMiddle == 'Social' && secondMiddle == 'Social Media')
           )
